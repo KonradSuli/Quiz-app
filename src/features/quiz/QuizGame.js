@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 import { useSelector } from 'react-redux';
 import { selectAllQuestions } from '../question/questionSlice';
-import { startQuiz, selectUsername } from './quizSlice';
+import { selectUsername } from './quizSlice';
 
 export function QuizGame() {
 

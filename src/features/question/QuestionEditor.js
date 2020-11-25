@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { NewQuestionForm } from './NewQuestionForm';
 import { selectAllQuestions, removeQuestion } from './questionSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { startQuiz } from '../quiz/quizSlice';
+import { setUsername as setStoreUsername } from '../quiz/quizSlice';
 
 export function QuestionEditor() {
 
     const questions = useSelector(selectAllQuestions);
     const dispatch = useDispatch();
+    let history = useHistory();
 
     const [idPrefix] = useState(nanoid());
     const [username, setUsername] = useState("");
@@ -38,7 +40,7 @@ export function QuestionEditor() {
     const newQuestionForm = <NewQuestionForm />;
 
     const startQuizButton = (
-        <button disabled = {questions.length === 0 || username === ""} onClick = {() => dispatch(startQuiz(username))}>
+        <button disabled = {questions.length === 0 || username === ""} onClick = {() => {dispatch(setStoreUsername(username)); history.push("/quiz")}}>
             Kezdődjék a játék!
         </button>
     );
