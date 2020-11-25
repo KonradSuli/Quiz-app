@@ -6,6 +6,21 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+function saveIntoLocalStorage (key, value) {
+  localStorage.setItem(key, value);
+}
+
+let lastQuestionReference;
+let lastUsername;
+
+store.subscribe(() => {
+  const state = store.getState();
+  if (lastQuestionReference !== state.question.questions)
+    saveIntoLocalStorage("questions", JSON.stringify(state.question.questions));
+  if (lastUsername !== state.quiz.username)
+    saveIntoLocalStorage("username", state.quiz.username);
+})
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
