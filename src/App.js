@@ -1,57 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import { QuestionEditor } from './features/question/QuestionEditor';
+import { selectGameProgress } from './features/quiz/quizSlice';
 import './App.css';
+import { useSelector } from 'react-redux';
+import { QuizGame } from './features/quiz/QuizGame';
 
 function App() {
+  const gameProgress = useSelector(selectGameProgress);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <QuestionEditor />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
+        {gameProgress === "not started" && <QuestionEditor />}
+        {gameProgress === "playing" && <QuizGame />}
       </header>
     </div>
   );
