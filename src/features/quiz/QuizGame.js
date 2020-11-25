@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAllQuestions } from '../question/questionSlice';
 import { selectUsername } from './quizSlice';
+import { QuizQuestionPanel } from './QuizQuestionPanel';
 
 export function QuizGame() {
 
@@ -13,9 +14,8 @@ export function QuizGame() {
     const [correctQuestions, setCorrectQuestions] = useState([]);
     const [incorrectQuestions, setIncorrectQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(selectNextQuestionIndex(remaningQuestions.length));
-    // Per question data
-    const [currentSelectedAnswerIndex, setCurrentSelectedAnswerIndex] = useState(-1);
-    const [currentQuestionState, setCurrentQuestionState] = useState("not answered"); // | "not revealed" | "revealed"
+    const [currentQuestion, setCurrentQuestion] = useState(remaningQuestions[currentQuestionIndex]);
+
 
     const headerRow = (
         <div>
@@ -26,20 +26,13 @@ export function QuizGame() {
         </div>
     );
 
-    const currentQuestion = remaningQuestions[currentQuestionIndex];
-    const lockAnswer = () => {
-        setCurrentQuestionState("not revealed");
-        setTimeout(() => {setCurrentQuestionState("revealed");}, 2500);
-    }
-
-    const selectNextQuestion = () => {
-
+    const updateScore = (selectedAnswerIndex) => {
         // Save the results of the previous question
         let newRemaningQuestions = remaningQuestions.filter(() => true);
-        const oldQuestion = newRemaningQuestions.splice(currentQuestionIndex, 1);
+        const oldQuestion = newRemaningQuestions.splice(currentQuestionIndex, 1)[0];
         setRemaningQuestions(newRemaningQuestions);
 
-        if (currentSelectedAnswerIndex === oldQuestion.correctAnswer) {
+        if (selectedAnswerIndex === oldQuestion.correctAnswer) {
             let newCorrectQuestions = correctQuestions.filter(() => true);
             newCorrectQuestions.push(oldQuestion);
             setCorrectQuestions(newCorrectQuestions);
@@ -48,38 +41,22 @@ export function QuizGame() {
             newIncorrectQuestions.push(oldQuestion);
             setIncorrectQuestions(newIncorrectQuestions);
         }
+    }
 
-        if (newRemaningQuestions.length !== 0)
-            setCurrentQuestionIndex(selectNextQuestionIndex(newRemaningQuestions.length));
+    const selectNextQuestion = () => {
+
+        if (remaningQuestions.length !== 0) {
+            setCurrentQuestionIndex(selectNextQuestionIndex(remaningQuestions.length));
+            setCurrentQuestion(remaningQuestions[currentQuestionIndex])
+        }
         else
             setCurrentQuestionIndex(-1);
-
-        setCurrentSelectedAnswerIndex(-1);
-        setCurrentQuestionState("not answered");
     };
-
-    const questionView = (
-        currentQuestionIndex !== -1 &&
-        <React.Fragment>
-            <div className="quiz_question__question_container">
-                <span>{currentQuestion.questionText}</span>
-            </div>
-            <div className="quiz_question__answers_container">
-                {currentQuestion.answers.map((answer, index) => (
-                    <span className={currentSelectedAnswerIndex === index ? "quiz_question__selected_answer" : ""} key={index} onClick={() => {currentQuestionState === "not answered" && setCurrentSelectedAnswerIndex(index)}}>{answer}</span>
-                ))}
-            </div>
-            <div>
-                {currentQuestionState !== "revealed" && <button disabled={currentSelectedAnswerIndex === -1} onClick={lockAnswer}> Válasz megjelölése </button>}
-                {currentQuestionState === "revealed" && <button onClick={() => {selectNextQuestion()}}> Tovább </button>}
-            </div>
-        </React.Fragment>
-    );
 
     return (
         <div>
             {headerRow}
-            {questionView}
+            {currentQuestionIndex !== -1 && <QuizQuestionPanel question={currentQuestion} onQuestionFinished={selectNextQuestion} onAnswerReveal={updateScore}/>}
         </div>
     );
 }
