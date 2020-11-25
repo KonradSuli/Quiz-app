@@ -16,13 +16,13 @@ export const questionSlice = createSlice ({
                     state.questions.push(action.payload);
                 }
             },
-            prepare(questionText, answers, correctAnswer) {
-                return {
+            prepare({questionText, answers, correctAnswer}) {
+                return { payload: {
                     id: nanoid(),
                     questionText: questionText,
                     answers: answers,
                     correctAnswer: correctAnswer
-                }
+                }}
             }
         },
 
