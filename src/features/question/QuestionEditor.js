@@ -19,7 +19,7 @@ export function QuestionEditor() {
     const notification = null;
 
     const usernameField = (
-        <div className = "form-group">
+        <div className = "form-group question__user">
             <label htmlFor = {idPrefix + "__username_input"}>A játékos neve</label>
             <input id = {idPrefix + "__username_input"} type = "text" className="form-control" placeholder="Mutatkozzon be!"
                 value = {username} onChange = {(event) => {setUsername(event.target.value)}}></input>
@@ -27,11 +27,11 @@ export function QuestionEditor() {
     );
 
     const questionsTable = (
-        <ul>
+        <ul className="list-unstyled questions__list">
             {questions.map(question => (
-                <li key={question.id} className="list-unstyled">
-                    <span>{question.questionText}</span>
-                    <button onClick={() => {dispatch(removeQuestion(question.id))}}> &#x1F5D1; </button>
+                <li key={question.id} className="list-unstyled questions__item">
+                    <span className="questions__item-question">{question.questionText}</span>
+                    <button className="questions__item-icon" onClick={() => {dispatch(removeQuestion(question.id))}}> &#x1F5D1; </button>
                 </li>
             ))}
         </ul>
@@ -45,12 +45,16 @@ export function QuestionEditor() {
         </button>
     );
     return (
-        <div className = "questions">
-            {usernameField}
-            {notification}
-            {questionsTable}
-            {newQuestionForm}
-            {startQuizButton}
+        <div className="questions">
+            <div className="questions__spacer_div"></div>
+            <div className = "questions__container">
+                {usernameField}
+                {startQuizButton}
+                {notification}
+                {questionsTable}
+                {newQuestionForm}
+            </div>
+            <div className="questions__spacer_div"></div>
         </div>
     );
 }
