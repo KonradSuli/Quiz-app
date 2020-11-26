@@ -38,8 +38,15 @@
   }
 }
 
+.new_question__answer_input {
+  flex-grow: 1;
+}
+
 .inline_radio_container {
-  display: inline-block;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .inline_radio_container__radio {
@@ -50,7 +57,7 @@
 
 .quiz {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-items: stretch;
