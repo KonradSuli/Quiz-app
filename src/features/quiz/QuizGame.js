@@ -18,11 +18,15 @@ export function QuizGame() {
 
 
     const headerRow = (
-        <div>
-            <span>{playerName}</span>
-            <span>{correctQuestions.length}</span><span className="scoreboard__expanded_text"> Helyes válasz, </span><span className="scoreboard__collapsed_text">/</span>
-            <span>{incorrectQuestions.length}</span><span className="scoreboard__expanded_text"> Helytelen válasz, </span><span className="scoreboard__collapsed_text">/</span>
-            <span>{remaningQuestions.length}</span><span className="scoreboard__expanded_text"> Hátralévő kérdés </span><span className="scoreboard__collapsed_text">/</span>
+        <div className="quiz-header">
+            <div className="quiz-header__right-side">
+                <span>{playerName}</span>
+            </div>
+            <div className="quiz-header__left-side">
+                <span className="scoreboard__text--green">{correctQuestions.length}</span><span className="scoreboard__text--expanded scoreboard__text--green"> Helyes válasz, </span><span className="scoreboard__text--collapsed">/</span>
+                <span className="scoreboard__text--red">{incorrectQuestions.length}</span><span className="scoreboard__text--expanded scoreboard__text--red"> Helytelen válasz, </span><span className="scoreboard__text--collapsed">/</span>
+                <span>{remaningQuestions.length}</span><span className="scoreboard__text--expanded"> Hátralévő kérdés </span><span className="scoreboard__text--collapsed">/</span>
+            </div>
         </div>
     );
 
@@ -46,17 +50,20 @@ export function QuizGame() {
     const selectNextQuestion = () => {
 
         if (remaningQuestions.length !== 0) {
-            setCurrentQuestionIndex(selectNextQuestionIndex(remaningQuestions.length));
-            setCurrentQuestion(remaningQuestions[currentQuestionIndex])
+            const newQuestionIndex = selectNextQuestionIndex(remaningQuestions.length)
+            setCurrentQuestionIndex(newQuestionIndex);
+            setCurrentQuestion(remaningQuestions[newQuestionIndex])
         }
         else
             setCurrentQuestionIndex(-1);
     };
 
+    console.log(currentQuestionIndex);
+    console.log(currentQuestion)
     return (
-        <div>
+        <div className="quiz">
             {headerRow}
-            {currentQuestionIndex !== -1 && <QuizQuestionPanel question={currentQuestion} onQuestionFinished={selectNextQuestion} onAnswerReveal={updateScore}/>}
+            {currentQuestionIndex !== -1 && <QuizQuestionPanel key={currentQuestion.id} question={currentQuestion} onQuestionFinished={selectNextQuestion} onAnswerReveal={updateScore}/>}
         </div>
     );
 }

@@ -48,14 +48,125 @@
   margin-left: 1rem;
 }
 
+.quiz {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-items: stretch;
+  padding-bottom: 2.5%;
+  background-color: lightgrey;
+}
+
+.quiz-header__right-side {
+  float: right;
+}
+
+.quiz-header__left-side {
+  float: left;
+}
+
+.quiz-header {
+  background-color: whitesmoke;
+  border-bottom: inset 5px;
+  border-radius: 0 0 .5em .5em;
+  padding: 0 .5em;
+}
+
+.scoreboard__text--green {
+  color: limegreen;
+}
+
+.scoreboard__text--red {
+  color: red;
+}
+
 @media (max-width: 40rem) {
-  .scoreboard__expanded_text {
+  .scoreboard__text--expanded {
     display: none;
   }
 }
 
 @media (min-width: 40rem) {
-  .scoreboard__collapsed_text {
+  .scoreboard__text--collapsed {
     display: none;
   }
+}
+
+.quiz_question__question_container {
+  flex-grow: 1;
+  margin: 10%;
+}
+
+.quiz_question__answers_container {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  border-top: outset 5px;
+  border-radius: 5%;
+  background-color: lightgrey;
+}
+
+.quiz_question__question {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px black solid;
+  border-radius: 2em;
+  box-shadow: 1px 2px grey;
+  background-color: whitesmoke;
+}
+
+.quiz_question__answer {
+  min-width: 34%;
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 2% 3% 2% 3%;
+  border: 2px black solid;
+  border-radius: 1em;
+  box-shadow: 1px 2px grey;
+  background-color: whitesmoke;
+}
+
+.quiz_question__answer--selected {
+  background-color: lemonchiffon;
+}
+
+.quiz_question__answer--locked {
+  animation: answer_locked_blink 1s linear infinite;
+  background-color: gold;
+}
+
+.quiz_question__answer--correct {
+  background-color: lime;
+}
+
+.quiz_question__answer--incorrect {
+  background-color: red;
+}
+
+@keyframes answer_locked_blink {
+  50% {
+    background-color:white;
+  }
+}
+
+.quiz_footer__container {
+  font-size: 1.5em;
+  width: 100%;
+}
+
+.quiz_footer__button {
+  border-radius: 7px;
+  width: 95%;
+}
+
+.quiz_footer__button--active {
+  background-color: lightgreen;
+  color: black;
 }
