@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addQuestion } from './questionSlice';
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -29,7 +29,7 @@ export function NewQuestionForm() {
                     <div key = {index} className="new_question__answer-row">
                         <input className="new_question__answer_input" id = {idPrefix + "__answer_" + index + "_input"} value = {value} onChange = {(event) => {let newArray = answers.filter(() => true); newArray[index] = event.target.value;setAnswers(newArray)}}></input>
                         <div className="form-check inline_radio_container">
-                            <input className="form-check-input position-static inline_radio_container__radio" type="radio" value = {index} checked = {correctAnswerIndex == index} onChange = {(event) => {setCorrectAnswerIndex(event.target.value)}}></input>
+                            <input className="form-check-input position-static inline_radio_container__radio" type="radio" value = {index} checked = {correctAnswerIndex === index} onChange = {(event) => {setCorrectAnswerIndex(Number(event.target.value))}}></input>
                         </div>
                     </div>
                 ))}

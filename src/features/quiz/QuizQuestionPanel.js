@@ -19,7 +19,7 @@ export function QuizQuestionPanel({question, onQuestionFinished, onAnswerReveal}
                 {question.answers.map((answer, index) => (
                     <span className={currentQuestionState === "not answered" && currentSelectedAnswerIndex === index ? ("quiz_question__answer quiz_question__answer--selected") :
                     currentQuestionState === "not revealed" && currentSelectedAnswerIndex === index ? "quiz_question__answer quiz_question__answer--locked" : 
-                    currentQuestionState === "revealed" && currentSelectedAnswerIndex === index && index === question.correctAnswer || currentQuestionState === "revealed" && index === question.correctAnswer ? "quiz_question__answer quiz_question__answer--correct" :
+                    (currentQuestionState === "revealed" && currentSelectedAnswerIndex === index && index === question.correctAnswer) || (currentQuestionState === "revealed" && index === question.correctAnswer) ? "quiz_question__answer quiz_question__answer--correct" :
                     currentQuestionState === "revealed" && currentSelectedAnswerIndex === index && index !== question.correctAnswer ? "quiz_question__answer quiz_question__answer--incorrect" : "quiz_question__answer"} key={index} onClick={() => {currentQuestionState === "not answered" && setCurrentSelectedAnswerIndex(index)}}>{answer}</span>
                 ))}
             </div>

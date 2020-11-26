@@ -1,10 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import logo from './logo.svg';
 import { QuestionEditor } from './features/question/QuestionEditor';
-import { selectGameProgress } from './features/quiz/quizSlice';
 import './App.css';
-import { useSelector } from 'react-redux';
 import { QuizGame } from './features/quiz/QuizGame';
 import { BrowserRouter, Redirect , Route, Switch } from 'react-router-dom';
 

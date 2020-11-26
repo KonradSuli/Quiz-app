@@ -4,7 +4,6 @@ import { selectAllQuestions } from '../question/questionSlice';
 import { selectUsername } from './quizSlice';
 import { QuizQuestionPanel } from './QuizQuestionPanel';
 import { QuizResultsPanel } from './QuizResultsPanel';
-import { current } from '@reduxjs/toolkit';
 
 export function QuizGame() {
 
