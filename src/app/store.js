@@ -7,8 +7,6 @@ const savedQuestions = localStorage.getItem('questions');
 const savedUsername = localStorage.getItem('username');
 
 if (savedQuestions || savedUsername) {
-  console.log(savedQuestions);
-  
   try {
     savedState = {
       question: {questions: savedQuestions ? JSON.parse(savedQuestions) : []},
@@ -19,8 +17,6 @@ if (savedQuestions || savedUsername) {
     console.log(e);
   }
 }
-
-console.log(savedState)
 
 export default configureStore({
   reducer: {

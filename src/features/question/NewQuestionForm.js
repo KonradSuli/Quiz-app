@@ -17,7 +17,7 @@ export function NewQuestionForm() {
     return (
         <div className="new_question">
             <div className = "form-group">
-                <label htmlFor = {idPrefix + "__question_input"}>Kérdés</label>
+                <label htmlFor = {idPrefix + "__question_input"}>Új Kérdés</label>
                 <input id = {idPrefix + "__question_input"} type = "text" className="form-control" placeholder="A kvíz során megjelenített kérdés szövegét írd ide!"
                     value = {question} onChange = {(event) => {setQuestion(event.target.value)}}></input>
             </div>
@@ -34,7 +34,7 @@ export function NewQuestionForm() {
                     </div>
                 ))}
             </div>
-            <button onClick={() => {
+            <button className="new_question__submit" onClick={() => {
                     dispatch(addQuestion({questionText: question, answers: answers, correctAnswer: Number(correctAnswerIndex)}))
                     setQuestion("");
                     setAnswers(["", "", "", ""]);

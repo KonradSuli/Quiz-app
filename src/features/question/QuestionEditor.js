@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { NewQuestionForm } from './NewQuestionForm';
 import { selectAllQuestions, removeQuestion } from './questionSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { setUsername as setStoreUsername } from '../quiz/quizSlice';
+import { selectUsername, setUsername as setStoreUsername } from '../quiz/quizSlice';
 
 export function QuestionEditor() {
 
@@ -13,7 +13,7 @@ export function QuestionEditor() {
     let history = useHistory();
 
     const [idPrefix] = useState(nanoid());
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(useSelector(selectUsername));
     // New question form data
 
     const notification = null;

@@ -28,7 +28,7 @@ export const questionSlice = createSlice ({
 
         removeQuestion: (state, action) => {
             const id = action.payload;
-            const questionAtHandIndex = state.questions.findIndex(question => question.id = id);
+            const questionAtHandIndex = state.questions.findIndex(question => question.id === id);
             if (questionAtHandIndex !== -1) {
                 state.questions.splice(questionAtHandIndex, 1);
             }

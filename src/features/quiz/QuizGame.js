@@ -3,12 +3,15 @@ import { useSelector } from 'react-redux';
 import { selectAllQuestions } from '../question/questionSlice';
 import { selectUsername } from './quizSlice';
 import { QuizQuestionPanel } from './QuizQuestionPanel';
+import { QuizResultsPanel } from './QuizResultsPanel';
+import { current } from '@reduxjs/toolkit';
 
 export function QuizGame() {
 
     const selectNextQuestionIndex = (lengthOfArray) => Math.floor(Math.random() * lengthOfArray);
 
     const playerName = useSelector(selectUsername);
+    const questionsInStore = useSelector(selectAllQuestions);
 
     const [remaningQuestions, setRemaningQuestions] = useState(useSelector(selectAllQuestions));
     const [correctQuestions, setCorrectQuestions] = useState([]);
@@ -17,7 +20,7 @@ export function QuizGame() {
     const [currentQuestion, setCurrentQuestion] = useState(remaningQuestions[currentQuestionIndex]);
 
 
-    const headerRow = (
+    const headerRow = currentQuestionIndex !== -1 && (
         <div className="quiz-header">
             <div className="quiz-header__right-side">
                 <span>{playerName}</span>
@@ -31,6 +34,7 @@ export function QuizGame() {
     );
 
     const updateScore = (selectedAnswerIndex) => {
+        console.log("hi1")
         // Save the results of the previous question
         let newRemaningQuestions = remaningQuestions.filter(() => true);
         const oldQuestion = newRemaningQuestions.splice(currentQuestionIndex, 1)[0];
@@ -48,7 +52,7 @@ export function QuizGame() {
     }
 
     const selectNextQuestion = () => {
-
+        console.log("hi2")
         if (remaningQuestions.length !== 0) {
             const newQuestionIndex = selectNextQuestionIndex(remaningQuestions.length)
             setCurrentQuestionIndex(newQuestionIndex);
@@ -58,12 +62,24 @@ export function QuizGame() {
             setCurrentQuestionIndex(-1);
     };
 
-    console.log(currentQuestionIndex);
+    const resetGame = () => {
+        setRemaningQuestions(questionsInStore);
+        setCorrectQuestions([]);
+        setIncorrectQuestions([]);
+        const newIndex = selectNextQuestionIndex(questionsInStore.length);
+        setCurrentQuestion(questionsInStore[newIndex]);
+        setCurrentQuestionIndex(newIndex);
+        console.log(currentQuestion);
+        console.log(questionsInStore);
+        console.log(currentQuestionIndex)
+    }
+
     console.log(currentQuestion)
     return (
-        <div className="quiz">
+        <div className={"quiz" + (currentQuestionIndex === -1 ? " quiz--results" : "")}>
             {headerRow}
-            {currentQuestionIndex !== -1 && <QuizQuestionPanel key={currentQuestion.id} question={currentQuestion} onQuestionFinished={selectNextQuestion} onAnswerReveal={updateScore}/>}
+            {currentQuestionIndex !== -1 && currentQuestion && <QuizQuestionPanel key={currentQuestion.id} question={currentQuestion} onQuestionFinished={selectNextQuestion} onAnswerReveal={updateScore}/>}
+            {currentQuestionIndex === -1 && <QuizResultsPanel correctAnswers = {correctQuestions.length} incorrectAnswers = {incorrectQuestions.length} resetGame = {resetGame}/>}
         </div>
     );
 }
